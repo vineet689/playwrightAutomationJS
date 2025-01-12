@@ -6,8 +6,8 @@ Feature: Verify login functionality of e-commerce website
 	Scenario: Verify user is able to login with valid credentials
 	 Given I navigate to "https://ecommerce-playground.lambdatest.io/"
 	 And I click on "My account"
-	 And I enter E-Mail Address "pranav@testroverautomation.com"
-	 And I enter password "Test1234"
+	 And I enter E-Mail Address "testautomation1@gmail.com"
+	 And I enter password "12345"
      When I click on submit button
 	 #Then I should verify url contains "route=account/account"
 	 Then I should verify url contains "route=account/account"

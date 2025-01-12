@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run bddgen && npm run playwright-test",
-    "bddgen":"npx bddgen",
+    "bddgen": "npx bddgen",
     "playwright-test": "npx playwright test --reporter=html,list --headed"
   },
   "keywords": [],
@@ -17,5 +17,8 @@
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.5",
     "playwright-bdd": "^8.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
   }
 }

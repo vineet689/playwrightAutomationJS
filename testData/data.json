@@ -1,0 +1,14 @@
+[
+
+    {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "expectedOutcome": "successful login"
+    },
+
+    {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "expectedOutcome": "successful login"
+    }
+]

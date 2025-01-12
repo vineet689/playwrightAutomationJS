@@ -1,25 +1,26 @@
-// @ts-check
+// @ts-nocheck
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
+import dotenv from 'dotenv';
 
-const testDir= defineBddConfig({
-  importTestFrom: 'tests/com.fixtures/fixtures.js',
-  paths: ['tests/features/**.feature'],
-  require: ['tests/com.steps/**.js'],
+// const testDir = defineBddConfig({
+//   importTestFrom: 'tests/fixtures/fixture.js',
+//   paths: ['tests/features/***.feature'],
+//   require: ['tests/steps/***steps.js']
+// });
+
+const testDir = defineBddConfig({
+  features: 'tests/com.features/***.feature',
+  steps: ['tests/com.steps/***steps.js', 'tests/com.fixtures/fixtures.js', "tests/com.hooks/hooks.js" ]
 });
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({
+  path: `./env/.env.${process.env.ENV}`
+});
 
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
 export default defineConfig({
   testDir,
-   /* Run tests in files in parallel */
+  /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -37,28 +38,59 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'off',
+    video: 'on-first-retry'
   },
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    // Setup projects for specific files
+  //  { name: 'adminsetup', testDir: './', testMatch: [/auth\/.*adminauthsetup\.js$/] },
+ //   { name: 'testsetup', testDir: './', testMatch: [/auth\/.*testauthsetup\.js$/] },
+    { name: 'usersetup', testDir: './', testMatch: [/auth\/.*userauthsetup\.js$/] },
 
-    /*
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // Main testing projects
+    // {
+    //   name: 'admin',
+    //   use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/admin.json' },
+    //   dependencies: ['adminsetup'],
+    // },
+    // {
+    //   name: 'user',
+    //   grep: /@changename/,
+    //   use: { ...devices['Desktop Chrome'],
+    //      storageState: 'playwright/.auth/user2.json' 
+    //   },
+    //    dependencies: ['usersetup'],
+    // },
+      {
+        name: 'LoginTest',
+        grep: /@login/,
+        use: { ...devices['Desktop Chrome'],
+        // storageState: 'playwright/.auth/user.json',
+      },
+      },
+    // {
+    //   name: 'test',
+    //   use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/test.json' },
+    //   dependencies: ['testsetup'],
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },*/
+    // Uncomment the following sections if you want to include more browser testing
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/user.json' },
+    //   dependencies: ['setup'],
+    // },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
-    /* Test against mobile viewports. */
+    /* Test against mobile viewports. Uncomment if needed */
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
@@ -68,7 +100,7 @@ export default defineConfig({
     //   use: { ...devices['iPhone 12'] },
     // },
 
-    /* Test against branded browsers. */
+    /* Test against branded browsers. Uncomment if needed */
     // {
     //   name: 'Microsoft Edge',
     //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
@@ -86,4 +118,3 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
