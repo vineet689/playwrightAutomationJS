@@ -1,0 +1,21 @@
+{
+  "name": "vineetplaywrightbdd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run bddgen && npm run playwright-test",
+    "bddgen":"npx bddgen",
+    "playwright-test": "npx playwright test --reporter=html,list --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.5",
+    "playwright-bdd": "^8.0.1"
+  }
+}
